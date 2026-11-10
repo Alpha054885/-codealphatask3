@@ -1,0 +1,7 @@
+# =============================================================================
+# SMART JPG FILE ORGANIZER - EXECUTION LOG
+# =============================================================================
+# Format:
+# [YYYY-MM-DD HH:MM:SS] Source: '<path>' | Destination: '<path>' | Scanned: <N> | Moved: <N> | Errors: <None/Details>
+# =============================================================================
+[2026-11-10 08:56:05] Source: '/Users/asiyaimran/.gemini/antigravity/scratch/Smart_JPG_Organizer/Source_Images' | Destination: '/Users/asiyaimran/.gemini/antigravity/scratch/Smart_JPG_Organizer/JPG_Images' | Scanned: 5 | Moved: 3 | Errors: None

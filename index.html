@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart JPG File Organizer - Web Dashboard</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* Custom polished styling */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .badge-jpg { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+    .badge-doc { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
+    .terminal-window {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+      border-radius: 0.75rem;
+      border: 1px solid #334155;
+    }
+    .pulse-glow {
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+
+  <!-- Top Navigation Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow">
+          📁
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 leading-tight">Smart JPG File Organizer</h1>
+          <p class="text-xs text-slate-500">Python Programming Internship – Task 3: Task Automation</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-300">
+          <span class="w-2 h-2 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span> 5/5 Tests Passing
+        </span>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-200">
+          Python 3 Standard Library
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Hero / Quick Overview -->
+    <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+      <div class="max-w-3xl space-y-3">
+        <div class="inline-block px-3 py-1 bg-sky-500/20 text-sky-300 text-xs font-semibold rounded-full border border-sky-400/30">
+          Interactive Task Automation Dashboard
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          Automated Image Detection & Organization Utility
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Demonstrates safe, fault-tolerant Python file automation. Scans any directory, identifies <code class="text-sky-300 bg-slate-800 px-1 py-0.5 rounded">.jpg</code> and <code class="text-sky-300 bg-slate-800 px-1 py-0.5 rounded">.jpeg</code> files, transfers them without overwriting duplicates, and keeps non-image files intact.
+        </p>
+        <div class="pt-2 flex flex-wrap gap-3">
+          <a href="#simulator" class="px-4 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 text-sm font-semibold rounded-lg shadow transition">
+            ⚡ Open Live Interactive Simulator
+          </a>
+          <a href="#tests" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-lg border border-slate-700 transition">
+            🧪 View Test Results (5/5 Passed)
+          </a>
+          <a href="#quickstart" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-lg border border-slate-700 transition">
+            💻 Terminal & VS Code Commands
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Simulator Section -->
+    <section id="simulator" class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 pb-4">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span>🎮</span> Live Interactive Simulation
+          </h3>
+          <p class="text-xs text-slate-500">Simulate how the Python script behaves across various folder scenarios.</p>
+        </div>
+        
+        <div class="flex items-center gap-2 flex-wrap">
+          <label class="text-xs font-medium text-slate-600">Scenario:</label>
+          <select id="scenarioSelector" onchange="changeScenario()" class="text-xs bg-slate-100 border border-slate-300 rounded-lg px-2.5 py-1.5 font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="default">Default: 3 JPGs + 2 Non-images (Standard)</option>
+            <option value="no_jpg">No JPG Files Present (Only Docs)</option>
+            <option value="missing">Missing Source Folder (Error Catch)</option>
+            <option value="collision">Collision: Target has photo1.jpg (Rename to _1)</option>
+            <option value="empty">Empty Source Folder</option>
+          </select>
+          <button onclick="resetSimulator()" class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-3 py-1.5 rounded-lg transition">
+            🔄 Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Folders Visualizer -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Source Folder Card -->
+        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/70">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">📂</span>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Source_Images/</h4>
+                <p class="text-xs text-slate-500" id="sourceSubtitle">5 file(s) present</p>
+              </div>
+            </div>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200">Source</span>
+          </div>
+
+          <div id="sourceFilesList" class="space-y-2 min-h-[160px] bg-white border border-slate-200 rounded-lg p-3">
+            <!-- Dynamic files inserted here -->
+          </div>
+        </div>
+
+        <!-- Destination Folder Card -->
+        <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/70">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">📁</span>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">JPG_Images/</h4>
+                <p class="text-xs text-slate-500" id="destSubtitle">0 file(s) present</p>
+              </div>
+            </div>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">Destination</span>
+          </div>
+
+          <div id="destFilesList" class="space-y-2 min-h-[160px] bg-white border border-slate-200 rounded-lg p-3">
+            <p class="text-xs text-slate-400 italic text-center py-10">Destination empty. Run the organizer to move JPG images here.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Button & Status -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+        <button id="runBtn" onclick="runOrganization()" class="w-full sm:w-auto px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm rounded-lg shadow-md transition flex items-center justify-center gap-2">
+          <span>🚀</span> Execute: organize_jpg_files()
+        </button>
+        <div id="actionStatus" class="text-xs font-medium text-slate-500">
+          Ready to run. Click button to execute Python automation logic.
+        </div>
+      </div>
+
+      <!-- Generated Report Preview -->
+      <div id="reportBox" class="hidden">
+        <div class="terminal-window p-5">
+          <div class="flex items-center justify-between border-b border-slate-700 pb-2 mb-3">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Terminal Output: Automation Report</span>
+            <span class="text-xs text-slate-400">Status: Complete</span>
+          </div>
+          <pre id="reportContent" class="text-xs leading-relaxed text-slate-200 font-mono"></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test Suite Results (5/5) -->
+    <section id="tests" class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span>🧪</span> Verified Internship Test Cases
+          </h3>
+          <p class="text-xs text-slate-500">All 5 mandatory test scenarios passed with 100% accuracy.</p>
+        </div>
+        <span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full border border-emerald-300">
+          5 / 5 PASSED
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-600">
+          <thead class="bg-slate-50 text-slate-800 uppercase font-bold text-[11px] border-y border-slate-200">
+            <tr>
+              <th class="py-3 px-4">Test Case</th>
+              <th class="py-3 px-4">Scenario / Condition</th>
+              <th class="py-3 px-4">Expected Behavior</th>
+              <th class="py-3 px-4">Result</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50/80">
+              <td class="py-3 px-4 font-bold text-slate-900">Test 1</td>
+              <td class="py-3 px-4">Source contains 3 JPGs & 2 non-image files</td>
+              <td class="py-3 px-4">3 JPGs moved to destination; 2 non-images preserved in source</td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">PASSED ✅</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/80">
+              <td class="py-3 px-4 font-bold text-slate-900">Test 2</td>
+              <td class="py-3 px-4">Source contains NO JPG files</td>
+              <td class="py-3 px-4">Informative message shown; 0 files moved; original files untouched</td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">PASSED ✅</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/80">
+              <td class="py-3 px-4 font-bold text-slate-900">Test 3</td>
+              <td class="py-3 px-4">Source folder does not exist</td>
+              <td class="py-3 px-4">Displays user-friendly error message without crashing</td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">PASSED ✅</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/80">
+              <td class="py-3 px-4 font-bold text-slate-900">Test 4</td>
+              <td class="py-3 px-4">Destination already contains file with same name</td>
+              <td class="py-3 px-4">Preserves both files; appends safe counter (<code class="bg-slate-100 px-1 rounded">photo1_1.jpg</code>)</td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">PASSED ✅</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/80">
+              <td class="py-3 px-4 font-bold text-slate-900">Test 5</td>
+              <td class="py-3 px-4">Source folder is completely empty</td>
+              <td class="py-3 px-4">Displays informative empty folder notice; exits gracefully</td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">PASSED ✅</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Execution Guide & Commands -->
+    <section id="quickstart" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Terminal Commands -->
+      <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <span>💻</span> Running in Mac Terminal
+        </h3>
+        <p class="text-xs text-slate-500">Run the organizer or automated test suite from your terminal:</p>
+        
+        <div class="terminal-window p-4 text-xs space-y-2 text-slate-300">
+          <p class="text-slate-500"># 1. Navigate to project</p>
+          <p class="text-emerald-400">cd /Users/asiyaimran/.gemini/antigravity/scratch/Smart_JPG_Organizer</p>
+          
+          <p class="text-slate-500 pt-2"># 2. Run the main organizer CLI</p>
+          <p class="text-emerald-400">python3 file_organizer.py</p>
+          
+          <p class="text-slate-500 pt-2"># 3. Run automated test suite</p>
+          <p class="text-emerald-400">python3 test_organizer.py</p>
+
+          <p class="text-slate-500 pt-2"># 4. Reset sample demo files</p>
+          <p class="text-emerald-400">python3 reset_samples.py</p>
+        </div>
+      </div>
+
+      <!-- Internship Viva Q&A -->
+      <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <span>🎓</span> Internship Viva Quick Prep
+        </h3>
+        <div class="space-y-3 text-xs">
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <p class="font-bold text-slate-800">Q: Why use shutil.move instead of os.rename?</p>
+            <p class="text-slate-600 mt-1">A: shutil.move works reliably across different disk partitions or mount points, while os.rename throws an EXDEV error if partitions differ.</p>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <p class="font-bold text-slate-800">Q: How does duplicate collision prevention work?</p>
+            <p class="text-slate-600 mt-1">A: get_unique_destination_path() checks os.path.exists() and dynamically appends an incrementing counter (_1, _2) before moving.</p>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <p class="font-bold text-slate-800">Q: How are subdirectories handled?</p>
+            <p class="text-slate-600 mt-1">A: The script uses os.path.isfile() to strictly process regular files, keeping subfolders untouched.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white py-6 mt-12 text-center text-xs text-slate-500">
+    <p>Smart JPG File Organizer • Python Programming Internship Task 3 • Built with Python Standard Library</p>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    const scenarios = {
+      default: {
+        source: [
+          { name: "photo1.jpg", type: "jpg", size: "149 B" },
+          { name: "photo2.jpg", type: "jpg", size: "149 B" },
+          { name: "photo3.jpeg", type: "jpg", size: "149 B" },
+          { name: "document.pdf", type: "doc", size: "68 B" },
+          { name: "notes.txt", type: "doc", size: "65 B" }
+        ],
+        dest: []
+      },
+      no_jpg: {
+        source: [
+          { name: "document.pdf", type: "doc", size: "68 B" },
+          { name: "notes.txt", type: "doc", size: "65 B" },
+          { name: "budget.xlsx", type: "doc", size: "12 KB" }
+        ],
+        dest: []
+      },
+      missing: {
+        source: null,
+        dest: []
+      },
+      collision: {
+        source: [
+          { name: "photo1.jpg", type: "jpg", size: "149 B" }
+        ],
+        dest: [
+          { name: "photo1.jpg (Existing)", type: "jpg", size: "200 B" }
+        ]
+      },
+      empty: {
+        source: [],
+        dest: []
+      }
+    };
+
+    let currentScenario = "default";
+    let state = JSON.parse(JSON.stringify(scenarios.default));
+
+    function renderFiles() {
+      const srcEl = document.getElementById("sourceFilesList");
+      const dstEl = document.getElementById("destFilesList");
+      const srcSub = document.getElementById("sourceSubtitle");
+      const dstSub = document.getElementById("destSubtitle");
+
+      // Source rendering
+      if (state.source === null) {
+        srcEl.innerHTML = `<p class="text-xs text-rose-500 font-semibold py-8 text-center">[ERROR] Directory '/.../Source_Images' does not exist.</p>`;
+        srcSub.textContent = "Folder does not exist";
+      } else if (state.source.length === 0) {
+        srcEl.innerHTML = `<p class="text-xs text-slate-400 italic py-8 text-center">[INFO] Directory is empty (0 files).</p>`;
+        srcSub.textContent = "0 file(s) present";
+      } else {
+        srcSub.textContent = `${state.source.length} file(s) present`;
+        srcEl.innerHTML = state.source.map(f => `
+          <div class="flex items-center justify-between p-2 rounded border border-slate-200 bg-white hover:border-slate-300 transition">
+            <div class="flex items-center space-x-2">
+              <span class="text-sm">${f.type === 'jpg' ? '🖼️' : '📄'}</span>
+              <span class="text-xs font-semibold text-slate-800">${f.name}</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-[11px] text-slate-400">${f.size}</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${f.type === 'jpg' ? 'badge-jpg' : 'badge-doc'}">
+                ${f.type === 'jpg' ? 'JPG Image' : 'Document'}
+              </span>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      // Destination rendering
+      if (state.dest.length === 0) {
+        dstEl.innerHTML = `<p class="text-xs text-slate-400 italic py-8 text-center">Destination empty. Run the organizer to move JPG images here.</p>`;
+        dstSub.textContent = "0 file(s) present";
+      } else {
+        dstSub.textContent = `${state.dest.length} file(s) present`;
+        dstEl.innerHTML = state.dest.map(f => `
+          <div class="flex items-center justify-between p-2 rounded border border-emerald-200 bg-emerald-50/50">
+            <div class="flex items-center space-x-2">
+              <span class="text-sm">🖼️</span>
+              <span class="text-xs font-bold text-slate-900">${f.name}</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-[11px] text-slate-400">${f.size}</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded badge-jpg">JPG Image</span>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    function changeScenario() {
+      const select = document.getElementById("scenarioSelector");
+      currentScenario = select.value;
+      resetSimulator();
+    }
+
+    function resetSimulator() {
+      state = JSON.parse(JSON.stringify(scenarios[currentScenario]));
+      document.getElementById("reportBox").classList.add("hidden");
+      document.getElementById("actionStatus").textContent = "Scenario reset. Click 'Execute' to run.";
+      renderFiles();
+    }
+
+    function runOrganization() {
+      const statusEl = document.getElementById("actionStatus");
+      const reportBox = document.getElementById("reportBox");
+      const reportContent = document.getElementById("reportContent");
+
+      if (state.source === null) {
+        statusEl.textContent = "Error: Source folder not found!";
+        reportBox.classList.remove("hidden");
+        reportContent.textContent = 
+`========== ORGANIZATION REPORT ==========
+Total files scanned: 0
+JPG images found: 0
+Images successfully moved: 0
+Other files skipped: 0
+
+Status: Failed: Source Folder Not Found
+
+Source Folder: non_existent_folder
+Destination Folder: JPG_Images
+=========================================`;
+        return;
+      }
+
+      if (state.source.length === 0) {
+        statusEl.textContent = "Notice: Source folder is empty.";
+        reportBox.classList.remove("hidden");
+        reportContent.textContent = 
+`========== ORGANIZATION REPORT ==========
+Total files scanned: 0
+JPG images found: 0
+Images successfully moved: 0
+Other files skipped: 0
+
+Status: Completed: Source Folder Is Empty
+
+Source Folder: Source_Images
+Destination Folder: JPG_Images
+=========================================`;
+        return;
+      }
+
+      const totalScanned = state.source.length;
+      const jpgs = state.source.filter(f => f.type === "jpg");
+      const nonJpgs = state.source.filter(f => f.type !== "jpg");
+      const jpgCount = jpgs.length;
+
+      if (jpgCount === 0) {
+        statusEl.textContent = "Completed: No JPG files found. Non-images untouched.";
+        reportBox.classList.remove("hidden");
+        reportContent.textContent = 
+`========== ORGANIZATION REPORT ==========
+Total files scanned: ${totalScanned}
+JPG images found: 0
+Images successfully moved: 0
+Other files skipped: ${totalScanned}
+
+Status: Completed: No JPG Images Found
+
+Source Folder: Source_Images
+Destination Folder: JPG_Images
+=========================================`;
+        return;
+      }
+
+      // Handle file movement and collision logic
+      let movedList = [];
+      jpgs.forEach(img => {
+        let finalName = img.name;
+        // Check collision in destination
+        if (state.dest.some(d => d.name === finalName || d.name === "photo1.jpg (Existing)")) {
+          finalName = "photo1_1.jpg";
+        }
+        movedList.push({ name: finalName, type: "jpg", size: img.size });
+      });
+
+      state.dest = [...state.dest, ...movedList];
+      state.source = nonJpgs;
+
+      renderFiles();
+
+      statusEl.textContent = `Success: Moved ${jpgCount} JPG file(s). ${nonJpgs.length} non-image file(s) preserved.`;
+      reportBox.classList.remove("hidden");
+      reportContent.textContent = 
+`========== ORGANIZATION REPORT ==========
+Total files scanned: ${totalScanned}
+JPG images found: ${jpgCount}
+Images successfully moved: ${jpgCount}
+Other files skipped: ${nonJpgs.length}
+
+Status: Completed Successfully!
+
+Source Folder: Source_Images
+Destination Folder: JPG_Images
+=========================================`;
+    }
+
+    // Initialize on load
+    renderFiles();
+  </script>
+</body>
+</html>

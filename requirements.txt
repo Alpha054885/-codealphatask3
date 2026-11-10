@@ -1,0 +1,16 @@
+# =============================================================================
+# SMART JPG FILE ORGANIZER - REQUIREMENTS
+# Python Programming Internship – Task 3: Task Automation
+# =============================================================================
+#
+# This project is built entirely using Python's standard library modules.
+# No external third-party packages or pip installations are required!
+#
+# Modules utilized:
+# - os       : Path manipulation, directory verification, file scanning
+# - shutil   : High-level file operations and safe file transfers
+# - datetime : Accurate timestamp generation for operation logging
+#
+# Minimum Recommended Python Version:
+# Python 3.8+ (Tested on Python 3.9+)
+# =============================================================================
